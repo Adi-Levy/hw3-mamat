@@ -1,0 +1,13 @@
+Start_Cluster 2
+
+Add_Point 2 0 0 
+Add_Point 2 10 0 
+Add_Point 2 0 4
+Add_Point 2 10 4
+Add_Point 2 5 2 
+Add_Point 2 1 9
+
+Print
+
+
+

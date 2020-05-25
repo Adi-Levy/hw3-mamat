@@ -1,0 +1,12 @@
+Students:
+[]
+Cluster:
+Cluster's dimension: 2
+[Point Dimension: 2, Size: 2, Coordinates: [0 0 ]
+Point Dimension: 2, Size: 2, Coordinates: [10 0 ]
+Point Dimension: 2, Size: 2, Coordinates: [0 4 ]
+Point Dimension: 2, Size: 2, Coordinates: [10 4 ]
+Point Dimension: 2, Size: 2, Coordinates: [5 2 ]
+Point Dimension: 2, Size: 2, Coordinates: [1 9 ]
+]
+Minimum Square Distance: 16

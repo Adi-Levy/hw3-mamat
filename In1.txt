@@ -1,0 +1,24 @@
+Add_Student 35452214 Avi 30 EE
+Add_Student 12345678 Batia 25 CS
+Add_Student 32165488 Charlie 55 Math
+Add_Student 98752144 Dani 12 EE
+
+Start_Cluster 3
+
+Add_Point 3 0 0 0
+Add_Point 3 1 0 1
+Add_Point 3 0 -3 2
+Add_Point 3 1 1 1 1
+Add_Point 3 5 2 2
+Add_Point 3 1 0 0
+
+Print
+
+Remove_Student 35452214
+Remove_Student 35452214
+Remove_Student 32323232
+ 
+Print
+
+
+
