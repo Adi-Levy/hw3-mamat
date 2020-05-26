@@ -1,10 +1,20 @@
 #include "list.h"
 
+/*
+   Types
+ */
+/*
+  list node struct holds the list element 
+  and pointer to the next node to keep them conncted
+ */
 typedef struct node_ {
     struct node_* next;
     PElem element;
 } Node_;
-
+/*
+  list struct that holds the list head tail and iterator for element access
+  holds element specific functions for element manipulation
+ */
 struct List_ {
     Node_ *head, *iterator, *tail;
 
@@ -14,6 +24,12 @@ struct List_ {
     delete_func deleteFunc;
 };
 
+/*
+ Function: ListCreate
+ Abstract: creats a new empty list with relevant element manipulators
+ Parameters: cpy_f - a function to copy 
+ Return: 
+ */
 PList ListCreate(copy_func cpy_f, delete_func del_f, compare_func cmp_f, print_func prt_f){
     PList new_list;
     new_list = (PList)malloc(sizeof(struct List_));
@@ -47,7 +63,7 @@ Result ListAdd(PList pList, PElem pElem){
     if(!elem){
         return FAIL;
     }
-    Node_* new_node = (Node*)malloc(sizeof(Node_));
+    Node_* new_node = (Node_*)malloc(sizeof(Node_));
     if(!new_node){
         free(elem);
         return FAIL;
@@ -87,14 +103,36 @@ PElem ListGetFirst(PList pList){
     return pList->head->element;
 }
 
-PElem ListGetNext(PList){
-
+PElem ListGetNext(PList pList){
+    if (!(pList->iterator) || !(pList->iterator->next)) {
+        return NULL;
+    }
+    pList->iterator = pList->iterator->next;
+    return pList->iterator->element;
 }
 
-BOOL ListCompare(PList, PList){
-
+BOOL ListCompare(PList pList1, PList pList2){
+    PElem elem1 = ListGetFirst(pList1);
+    PElem elem2 = ListGetFirst(pList2);
+    while (!elem1 && !elem2) {
+        if (!(pList1->compareFunc(elem1, elem2))) {
+            return FALSE;
+        }
+        elem1 = ListGetNext(pList1);
+        elem2 = ListGetNext(pList2);
+    }
+    if (!(pList1->compareFunc(elem1, elem2))) {
+        return FALSE;
+    }
+    return TRUE;
 }
 
-void ListPrint(PList){
-
+void ListPrint(PList pList){
+    PElem prt_elem = ListGetFirst(pList);
+    printf("[");
+    while (prt_elem) {
+        pList->printFunc(prt_elem);
+        prt_elem = ListGetNext(pList);
+    }
+    printf("]\n");
 }
