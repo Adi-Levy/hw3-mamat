@@ -70,7 +70,7 @@ Result ListAdd(PList pList, PElem pElem){
     }
     new_node->element = elem;
     new_node->next = NULL;
-    if(!(pList->tail)){
+    if(!(pList->head)){
         pList->tail = new_node;
         pList->head = new_node;
     }
@@ -82,11 +82,21 @@ Result ListAdd(PList pList, PElem pElem){
 }
 
 Result ListRemove(PList pList, PElem pElem){
+    // check if first element is the one to delet and if so shorten the list
+    if (pList->head->element == pElem) {
+        Node_* tmp = pList->head;
+        pList->head = pList->head->next;
+        pList->iterator = pList->head;
+        pList->deleteFunc(tmp->element);
+        free(tmp);
+        return SUCCESS;
+    }
+    // if not run through the list to find the node with the element and remove it
     pList->iterator = pList->head;
-    while(pList->iterator){
-        if(pList->compareFunc(pList->iterator->element,pElem)){
-            Node_* tmp = pList->iterator;
-            pList->iterator = pList->iterator->next;
+    while(pList->iterator->next){
+        if(pList->compareFunc(pList->iterator->next->element,pElem)){
+            Node_* tmp = pList->iterator->next;
+            pList->iterator->next = pList->iterator->next->next;
             pList->deleteFunc(tmp->element);
             free(tmp);
             return SUCCESS;
