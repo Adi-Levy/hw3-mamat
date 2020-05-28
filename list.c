@@ -59,7 +59,7 @@ void ListDestroy(PList pList){
 }
 
 Result ListAdd(PList pList, PElem pElem){
-    PElem elem = pList->copyFunc(pElem);
+    PElem elem = (PElem)pList->copyFunc(pElem);
     if(!elem){
         return FAIL;
     }
@@ -122,14 +122,14 @@ PElem ListGetNext(PList pList){
 }
 
 BOOL ListCompare(PList pList1, PList pList2){
-    PElem elem1 = ListGetFirst(pList1);
-    PElem elem2 = ListGetFirst(pList2);
+    PElem elem1 = (PElem)ListGetFirst(pList1);
+    PElem elem2 = (PElem)ListGetFirst(pList2);
     while (!elem1 && !elem2) {
         if (!(pList1->compareFunc(elem1, elem2))) {
             return FALSE;
         }
-        elem1 = ListGetNext(pList1);
-        elem2 = ListGetNext(pList2);
+        elem1 = (PElem)ListGetNext(pList1);
+        elem2 = (PElem)ListGetNext(pList2);
     }
     if (!(pList1->compareFunc(elem1, elem2))) {
         return FALSE;
@@ -138,11 +138,11 @@ BOOL ListCompare(PList pList1, PList pList2){
 }
 
 void ListPrint(PList pList){
-    PElem prt_elem = ListGetFirst(pList);
+    PElem prt_elem = (PElem)ListGetFirst(pList);
     printf("[");
     while (prt_elem) {
         pList->printFunc(prt_elem);
-        prt_elem = ListGetNext(pList);
+        prt_elem = (PElem)ListGetNext(pList);
     }
     printf("]\n");
 }
