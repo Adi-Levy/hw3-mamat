@@ -13,7 +13,7 @@ typedef void* PElem;
 typedef BOOL (*compare_func)(PElem,PElem);
 typedef PElem (*copy_func)(PElem);
 typedef void (*print_func)(PElem);
-typedef Result (*delete_func)(PElem);
+typedef void (*delete_func)(PElem);
 
 /*Interface functions*/
 PList ListCreate(copy_func, delete_func, compare_func, print_func);
