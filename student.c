@@ -13,8 +13,13 @@ PStudent StudentCreate(char* n_name, int n_age, int n_ID, char* n_faculty) {
 		return NULL;
 	}
 	new_student->name = (char*)malloc(strlen(n_name) + 1);
+	if (!new_student->name) {
+		free(new_student);
+		return NULL;
+	}
 	new_student->faculty = (char*)malloc(strlen(n_faculty) + 1);
-	if (!new_student->name || !new_student->faculty) {
+	if (!new_student->faculty) {
+		free(new_student->name);
 		free(new_student);
 		return NULL;
 	}
@@ -44,8 +49,5 @@ void destroyStudent(PStudent pStudent) {
 }
 
 BOOL compareStudents(PStudent student1, PStudent student2) {
-	if (student1->ID == student2->ID)
-		return TRUE;
-	else
-		return FALSE;
+	return (student1->ID == student2->ID) ? TRUE : FALSE;
 }
