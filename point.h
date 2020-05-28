@@ -5,6 +5,12 @@
 
 typedef struct Point_* PPoint;
 
+/*User functions*/
+static BOOL compare_coor(int*, int*);
+static int* copy_coor(int*);
+static void print_coor(int*);
+static void del_coor(int*);
+
 /*Interface functions*/
 PPoint PointCreate(int);
 void PointDestroy(PPoint);
