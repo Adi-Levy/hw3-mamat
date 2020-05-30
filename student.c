@@ -33,21 +33,26 @@ PStudent StudentCreate(char* n_name, int n_age, int n_ID, char* n_faculty) {
 	return new_student;
 }
 
-void printStudent(PStudent pStudent) {
-	printf("Name: %s, Age: %d, ID: %d, Faculty: %s\n", pStudent->name,
-		pStudent->age, pStudent->ID, pStudent->faculty);
+void printStudent(void* pStudent) {
+	PStudent student = (PStudent)pStudent;
+	printf("Name: %s, Age: %d, ID: %d, Faculty: %s\n", student->name,
+		student->age, student->ID, student->faculty);
 }
 
-PStudent cloneStudent(PStudent pStudent) {
-	return StudentCreate(pStudent->name, pStudent->age, pStudent->ID, pStudent->faculty);
+void* cloneStudent(void* pStudent) {
+	PStudent student = (PStudent)pStudent;
+	return (void*)StudentCreate(student->name, student->age, student->ID, student->faculty);
 }
 
-void destroyStudent(PStudent pStudent) {
-	free(pStudent->name);
-	free(pStudent->faculty);
-	free(pStudent);
+void destroyStudent(void* pStudent) {
+	PStudent student = (PStudent)pStudent;
+	free(student->name);
+	free(student->faculty);
+	free(student);
 }
 
-BOOL compareStudents(PStudent student1, PStudent student2) {
-	return (student1->ID == student2->ID) ? TRUE : FALSE;
+BOOL compareStudents(void* student1, void* student2) {
+	PStudent pStudent1 = (PStudent)student1;
+	PStudent pStudent2 = (PStudent)student2;
+	return (pStudent1->ID == pStudent2->ID) ? TRUE : FALSE;
 }

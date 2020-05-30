@@ -8,9 +8,9 @@
 typedef struct Student_ Student, *PStudent;
 
 PStudent StudentCreate(char*, int, int, char*);
-void printStudent(PStudent);
-PStudent cloneStudent(PStudent);
-void destroyStudent(PStudent);
-BOOL compareStudents(PStudent, PStudent);
+void printStudent(void*);
+void* cloneStudent(void*);
+void destroyStudent(void*);
+BOOL compareStudents(void*, void*);
 
 #endif
