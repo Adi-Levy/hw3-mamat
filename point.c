@@ -111,10 +111,10 @@ void* PointCopy(void* pPoint) {
 }
 
 int PointGetAttribute(PPoint pPoint, char* attribute) {
-	if (attribute == "dimention") {
+	if (!strcmp(attribute,"dimention")) {
 		return pPoint->dimention;
 	}
-	else if (attribute == "size") {
+	else if (!strcmp(attribute,"size")) {
 		return pPoint->size;
 	}
 	else {
