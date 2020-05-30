@@ -1,5 +1,4 @@
 #include "point.h"
-#include "list.h"
 
 struct Point_ {
 	int dimention, size;
@@ -88,4 +87,23 @@ void PointPrint(PPoint pPoint) {
 	printf("Point Dimention: %d, Size: %d, Coordinates: ", pPoint->dimention, pPoint->size);
 	ListPrint(pPoint->coordinates);
 	printf("\n");
+}
+
+BOOL PointCompare(PPoint point1, PPoint point2) {
+	return ((point1->dimention == point2->dimention) &&
+		(point1->size == point2->size) &&
+		(ListCompare(point1->coordinates, point2->coordinates))) ? TRUE : FALSE;
+}
+
+PPoint PointCopy(PPoint point) {
+	PPoint New_point = PointCreate(point->dimension);
+
+	int tmp_coor = PointGetFirstCoordinate(point);
+	int i;
+	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point))
+	{
+		PointAddCoordinate(point, tmp_coor);
+	}
+
+	return New_point;
 }

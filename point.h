@@ -2,6 +2,7 @@
 #define _POINT_H_
 
 #include "defs.h"
+#include "list.h"
 
 typedef struct Point_* PPoint;
 
@@ -18,5 +19,7 @@ Result PointAddCoordinate(PPoint, int);
 int PointGetFirstCoordinate(PPoint);
 int PointGetNextCoordinate(PPoint);
 void PointPrint(PPoint);
+BOOL PointCompare(PPoint, PPoint);
+PPoint PointCopy(PPoint);
 
 #endif
