@@ -96,14 +96,23 @@ BOOL PointCompare(PPoint point1, PPoint point2) {
 }
 
 PPoint PointCopy(PPoint point) {
-	PPoint New_point = PointCreate(point->dimension);
-
+	PPoint New_point = PointCreate(point->dimention);
 	int tmp_coor = PointGetFirstCoordinate(point);
 	int i;
-	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point))
-	{
+	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point)) {
 		PointAddCoordinate(point, tmp_coor);
 	}
-
 	return New_point;
+}
+
+int PointGetAttribute(PPoint pPoint, char* attribute) {
+	if (attribute == "dimention") {
+		return pPoint->dimention;
+	}
+	else if (attribute == "size") {
+		return pPoint->size;
+	}
+	else {
+		return -1;
+	}
 }

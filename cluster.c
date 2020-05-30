@@ -1,4 +1,5 @@
 #include "cluster.h"
+#include "point.h"
 
 struct Cluster_ {
 	int dimention;
@@ -27,7 +28,8 @@ void ClusterDestroy(PCluster pCluster) {
 }
 
 Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
-	if ((pPoint->size != pCluster->dimension) || (pPoint->dimension != pCluster->dimension)){
+	if ((PointGetAttribute(pPoint,"size") != pCluster->dimention) || 
+		(PointGetAttribute(pPoint, "dimention") != pCluster->dimention)){
 		return FAIL;
 	}
 	
@@ -53,7 +55,7 @@ int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 		int tmp_coor = PointGetFirstCoordinate(pPoint);
 		int tmp_coor1 = PointGetFirstCoordinate(point1);
 		int i;
-		for (i = 0; i < pPoint->size; i++, tmp_coor = PointGetNextCoordinate(pPoint),
+		for (i = 0; i < PointGetAttribute(pPoint, "size"); i++, tmp_coor = PointGetNextCoordinate(pPoint),
 			tmp_coor1 = PointGetNextCoordinate(point1))
 		{
 			dist += ((tmp_coor1 - tmp_coor) * (tmp_coor1 - tmp_coor));

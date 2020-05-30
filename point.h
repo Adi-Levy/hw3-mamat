@@ -21,5 +21,6 @@ int PointGetNextCoordinate(PPoint);
 void PointPrint(PPoint);
 BOOL PointCompare(PPoint, PPoint);
 PPoint PointCopy(PPoint);
+int PointGetAttribute(PPoint, char*);
 
 #endif
