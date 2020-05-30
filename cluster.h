@@ -5,6 +5,17 @@
 
 typedef struct Cluster_* PCluster;
 
+/*User functions*/
+static BOOL compare_points(PPoint, PPoint);
+static PPoint copy_point(PPoint);
+static void print_point(PPoint);
+static void del_point(PPoint);
+
 /*Interface functions*/
+PCluster ClusterCreate(int);
+void ClusterDestroy(PCluster);
+Result ClusterAddPoint(PCluster, PPoint);
+int ClusterGetMinDistance(PCluster, PPoint);
+void ClusterPrint(PCluster);
 
 #endif

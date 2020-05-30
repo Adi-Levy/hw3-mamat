@@ -124,7 +124,7 @@ PElem ListGetNext(PList pList){
 BOOL ListCompare(PList pList1, PList pList2){
     PElem elem1 = (PElem)ListGetFirst(pList1);
     PElem elem2 = (PElem)ListGetFirst(pList2);
-    while (!elem1 && !elem2) {
+    while (elem1 && elem2) {
         if (!(pList1->compareFunc(elem1, elem2))) {
             return FALSE;
         }

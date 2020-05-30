@@ -87,4 +87,5 @@ int PointGetNextCoordinate(PPoint pPoint) {
 void PointPrint(PPoint pPoint) {
 	printf("Point Dimention: %d, Size: %d, Coordinates: ", pPoint->dimention, pPoint->size);
 	ListPrint(pPoint->coordinates);
+	printf("\n");
 }
