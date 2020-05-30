@@ -8,25 +8,25 @@ struct Point_ {
 /*
  static coordinate manipulation methods
 */
-static BOOL compare_coor(int* coor1, int* coor2) {
-	return (*coor1 == *coor2)?TRUE:FALSE;
+static BOOL compare_coor(void* coor1, void* coor2) {
+	return (*(int*)coor1 == *(int*)coor2)?TRUE:FALSE;
 }
 
-static int* copy_coor(int* coor) {
+static void* copy_coor(void* coor) {
 	int* cpy_coor;
 	cpy_coor = (int*)malloc(sizeof(int));
 	if (!cpy_coor)
 		return NULL;
-	*cpy_coor = *coor;
-	return cpy_coor;
+	*cpy_coor = *(int*)coor;
+	return (void*)cpy_coor;
 }
 
-static void print_coor(int* coor) {
-	printf("%d ", *coor);
+static void print_coor(void* coor) {
+	printf("%d ", *(int*)coor);
 }
 
-static void del_coor(int* coor) {
-	free(coor);
+static void del_coor(void* coor) {
+	free((int*)coor);
 }
 
 
@@ -48,9 +48,10 @@ PPoint PointCreate(int dim) {
 	return new_point;
 }
 
-void PointDestroy(PPoint pPoint) {
-	ListDestroy(pPoint->coordinates);
-	free(pPoint);
+void PointDestroy(void* pPoint) {
+	PPoint point = (PPoint)pPoint;
+	ListDestroy(point->coordinates);
+	free(point);
 }
 
 Result PointAddCoordinate(PPoint pPoint, int n_coordinate) {
@@ -83,26 +84,30 @@ int PointGetNextCoordinate(PPoint pPoint) {
 	return (coor) ? *coor : 0;
 }
 
-void PointPrint(PPoint pPoint) {
+void PointPrint(void* point) {
+	PPoint pPoint = (PPoint)point;
 	printf("Point Dimention: %d, Size: %d, Coordinates: ", pPoint->dimention, pPoint->size);
 	ListPrint(pPoint->coordinates);
 	printf("\n");
 }
 
-BOOL PointCompare(PPoint point1, PPoint point2) {
+BOOL PointCompare(void* pPoint1, void* pPoint2) {
+	PPoint point1 = (PPoint)pPoint1;
+	PPoint point2 = (PPoint)pPoint2;
 	return ((point1->dimention == point2->dimention) &&
 		(point1->size == point2->size) &&
 		(ListCompare(point1->coordinates, point2->coordinates))) ? TRUE : FALSE;
 }
 
-PPoint PointCopy(PPoint point) {
+void* PointCopy(void* pPoint) {
+	PPoint point = (PPoint)pPoint;
 	PPoint New_point = PointCreate(point->dimention);
 	int tmp_coor = PointGetFirstCoordinate(point);
 	int i;
 	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point)) {
 		PointAddCoordinate(point, tmp_coor);
 	}
-	return New_point;
+	return (void*)New_point;
 }
 
 int PointGetAttribute(PPoint pPoint, char* attribute) {
