@@ -110,7 +110,10 @@ Result ListRemove(PList pList, PElem pElem){
 
 PElem ListGetFirst(PList pList){
     pList->iterator = pList->head;
-    return pList->head->element;
+    if (pList->head)
+        return pList->head->element;
+    else
+        return NULL;
 }
 
 PElem ListGetNext(PList pList){
