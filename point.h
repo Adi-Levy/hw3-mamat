@@ -7,10 +7,10 @@
 typedef struct Point_* PPoint;
 
 /*User functions*/
-static BOOL compare_coor(void*, void*);
+/*static BOOL compare_coor(void*, void*);
 static void* copy_coor(void*);
 static void print_coor(void*);
-static void del_coor(void*);
+static void del_coor(void*);*/
 
 /*Interface functions*/
 PPoint PointCreate(int);
