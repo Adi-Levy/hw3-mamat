@@ -105,7 +105,7 @@ void* PointCopy(void* pPoint) {
 	int tmp_coor = PointGetFirstCoordinate(point);
 	int i;
 	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point)) {
-		PointAddCoordinate(point, tmp_coor);
+		PointAddCoordinate(New_point, tmp_coor);
 	}
 	return (void*)New_point;
 }
