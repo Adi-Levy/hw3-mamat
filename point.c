@@ -1,7 +1,7 @@
 #include "point.h"
 
 struct Point_ {
-	int dimention, size;
+	int dimension, size;
 	PList coordinates;
 };
 
@@ -43,7 +43,7 @@ PPoint PointCreate(int dim) {
 		return NULL;
 	}
 	new_point->coordinates = new_coord_list;
-	new_point->dimention = dim;
+	new_point->dimension = dim;
 	new_point->size = 0;
 	return new_point;
 }
@@ -55,7 +55,7 @@ void PointDestroy(void* pPoint) {
 }
 
 Result PointAddCoordinate(PPoint pPoint, int n_coordinate) {
-	if (pPoint->size != pPoint->dimention) {
+	if (pPoint->size != pPoint->dimension) {
 		int* new_coor;
 		new_coor = (int*)malloc(sizeof(int));
 		if (!new_coor)
@@ -86,7 +86,7 @@ int PointGetNextCoordinate(PPoint pPoint) {
 
 void PointPrint(void* point) {
 	PPoint pPoint = (PPoint)point;
-	printf("Point Dimention: %d, Size: %d, Coordinates: ", pPoint->dimention, pPoint->size);
+	printf("Point Dimension: %d, Size: %d, Coordinates: ", pPoint->dimension, pPoint->size);
 	ListPrint(pPoint->coordinates);
 	//printf("\n");
 }
@@ -94,14 +94,14 @@ void PointPrint(void* point) {
 BOOL PointCompare(void* pPoint1, void* pPoint2) {
 	PPoint point1 = (PPoint)pPoint1;
 	PPoint point2 = (PPoint)pPoint2;
-	return ((point1->dimention == point2->dimention) &&
+	return ((point1->dimension == point2->dimension) &&
 		(point1->size == point2->size) &&
 		(ListCompare(point1->coordinates, point2->coordinates))) ? TRUE : FALSE;
 }
 
 void* PointCopy(void* pPoint) {
 	PPoint point = (PPoint)pPoint;
-	PPoint New_point = PointCreate(point->dimention);
+	PPoint New_point = PointCreate(point->dimension);
 	int tmp_coor = PointGetFirstCoordinate(point);
 	int i;
 	for (i = 0; i < point->size; i++, tmp_coor = PointGetNextCoordinate(point)) {
@@ -111,8 +111,8 @@ void* PointCopy(void* pPoint) {
 }
 
 int PointGetAttribute(PPoint pPoint, char* attribute) {
-	if (!strcmp(attribute,"dimention")) {
-		return pPoint->dimention;
+	if (!strcmp(attribute,"dimension")) {
+		return pPoint->dimension;
 	}
 	else if (!strcmp(attribute,"size")) {
 		return pPoint->size;

@@ -2,7 +2,7 @@
 #include "point.h"
 
 struct Cluster_ {
-	int dimention;
+	int dimension;
 	PList points;
 	int min_dist;
 };
@@ -17,7 +17,7 @@ PCluster ClusterCreate(int dim) {
 		return NULL;
 	}
 	new_cluster->points = new_point_list;
-	new_cluster->dimention = dim;
+	new_cluster->dimension = dim;
 	new_cluster->min_dist = 0;
 	return new_cluster;
 }
@@ -28,8 +28,8 @@ void ClusterDestroy(PCluster pCluster) {
 }
 
 Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
-	if ((PointGetAttribute(pPoint,"size") != pCluster->dimention) || 
-		(PointGetAttribute(pPoint, "dimention") != pCluster->dimention)){
+	if ((PointGetAttribute(pPoint,"size") != pCluster->dimension) || 
+		(PointGetAttribute(pPoint, "dimension") != pCluster->dimension)){
 		return FAIL;
 	}
 	
@@ -72,7 +72,7 @@ int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 }
 
 void ClusterPrint(PCluster pCluster) {
-	printf("Cluster's dimension: %d\n", pCluster->dimention);
+	printf("Cluster's dimension: %d\n", pCluster->dimension);
 	ListPrint(pCluster->points);
 	printf("Minimum Square Distance: %d\n", pCluster->min_dist);
 }
