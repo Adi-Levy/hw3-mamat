@@ -83,7 +83,7 @@ Result ListAdd(PList pList, PElem pElem){
 
 Result ListRemove(PList pList, PElem pElem){
     // check if first element is the one to delet and if so shorten the list
-    if (pList->head->element == pElem) {
+    if (pList->compareFunc(pList->head->element,pElem) == TRUE) {
         Node_* tmp = pList->head;
         pList->head = pList->head->next;
         pList->iterator = pList->head;

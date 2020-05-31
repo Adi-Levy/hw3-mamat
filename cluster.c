@@ -51,7 +51,7 @@ Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
 int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 	PPoint point1 = (PPoint)ListGetFirst(pCluster->points);
 	int min_dist = 10000;
-	while (point1) {
+	while (point1 && point1 != pPoint) {
 		int dist = 0;
 		int tmp_coor = PointGetFirstCoordinate(pPoint);
 		int tmp_coor1 = PointGetFirstCoordinate(point1);

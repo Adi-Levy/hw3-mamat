@@ -88,7 +88,7 @@ void PointPrint(void* point) {
 	PPoint pPoint = (PPoint)point;
 	printf("Point Dimention: %d, Size: %d, Coordinates: ", pPoint->dimention, pPoint->size);
 	ListPrint(pPoint->coordinates);
-	printf("\n");
+	//printf("\n");
 }
 
 BOOL PointCompare(void* pPoint1, void* pPoint2) {
