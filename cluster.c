@@ -40,9 +40,10 @@ Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
 		}
 		point1 = (PPoint)ListGetNext(pCluster->points);
 	}
+	int n_min_d = (pCluster->min_dist < ClusterGetMinDistance(pCluster, pPoint)) ?
+		pCluster->min_dist : ClusterGetMinDistance(pCluster, pPoint);
 	if (ListAdd(pCluster->points, pPoint) == SUCCESS) {
-		pCluster->min_dist = (pCluster->min_dist < ClusterGetMinDistance(pCluster, pPoint)) ? 
-			pCluster->min_dist : ClusterGetMinDistance(pCluster, pPoint); 
+		pCluster->min_dist = n_min_d;
 		return SUCCESS;
 	}
 	return FAIL;
