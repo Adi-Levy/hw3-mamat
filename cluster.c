@@ -28,8 +28,8 @@ void ClusterDestroy(PCluster pCluster) {
 }
 
 Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
-	if ((PointGetAttribute(pPoint,"size") != pCluster->dimension) || 
-		(PointGetAttribute(pPoint, "dimension") != pCluster->dimension)){
+	if ((PointGetAttribute(pPoint,SIZE) != pCluster->dimension) || 
+		(PointGetAttribute(pPoint, DIMENSION) != pCluster->dimension)){
 		return FAIL;
 	}
 	
@@ -57,7 +57,7 @@ int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 		int tmp_coor = PointGetFirstCoordinate(pPoint);
 		int tmp_coor1 = PointGetFirstCoordinate(point1);
 		int i;
-		for (i = 0; i < PointGetAttribute(pPoint, "size"); i++, tmp_coor = PointGetNextCoordinate(pPoint),
+		for (i = 0; i < PointGetAttribute(pPoint, SIZE); i++, tmp_coor = PointGetNextCoordinate(pPoint),
 			tmp_coor1 = PointGetNextCoordinate(point1))
 		{
 			dist += ((tmp_coor1 - tmp_coor) * (tmp_coor1 - tmp_coor));

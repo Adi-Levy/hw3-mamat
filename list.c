@@ -27,8 +27,11 @@ struct List_ {
 /*
  Function: ListCreate
  Abstract: creats a new empty list with relevant element manipulators
- Parameters: cpy_f - a function to copy 
- Return: 
+ Parameters: cpy_f - a function to copy list elements
+             del_f - a function to delete list elements
+             cmp_f - a function to compare list elements
+             prt_f - a function to print list elements
+ Return: pointer to new empty list with defined manipulation functions
  */
 PList ListCreate(copy_func cpy_f, delete_func del_f, compare_func cmp_f, print_func prt_f){
     PList new_list;
@@ -47,6 +50,12 @@ PList ListCreate(copy_func cpy_f, delete_func del_f, compare_func cmp_f, print_f
     return new_list;
 }
 
+/*
+ Function: ListDestroy
+ Abstract: deletes all elements and nodes in a list and deletes the list (free)
+ Parameters: pList - a a list to delete
+ Return: N/A
+ */
 void ListDestroy(PList pList){
     pList->iterator = pList->head;
     while(pList->iterator){
@@ -58,6 +67,13 @@ void ListDestroy(PList pList){
     free(pList);
 }
 
+/*
+ Function: ListAdd
+ Abstract: adds a copy of an element to the list
+ Parameters: pList - a pointer to a list to add the new element to
+             pElem - a pointer to the element to be added to the list
+ Return: SUCCESS or FAIL depending on the success of the addition to the list operation
+ */
 Result ListAdd(PList pList, PElem pElem){
     PElem elem = (PElem)pList->copyFunc(pElem);
     if(!elem){
@@ -81,6 +97,14 @@ Result ListAdd(PList pList, PElem pElem){
     return SUCCESS;
 }
 
+/*
+ Function: ListRemove
+ Abstract: removes the item in the list that matches the givven element.
+            if element is not in list it won't remove anything
+ Parameters: pList - a pointer to a list to remove the element from
+             pElem - a pointer to an element the is to be removed from the list
+ Return: SUCCESS or FAIL depending on the success of the removal from the list
+ */
 Result ListRemove(PList pList, PElem pElem){
     // check if first element is the one to delet and if so shorten the list
     if (pList->compareFunc(pList->head->element,pElem) == TRUE) {
@@ -108,6 +132,13 @@ Result ListRemove(PList pList, PElem pElem){
     return FAIL;
 }
 
+/*
+ Function: ListGetFirst
+ Abstract: a getter method for the first element in the list.
+            moves the list iterator to the head node
+ Parameters: pList - a pointer to the list to get the first element of
+ Return: pointer to the element of the first node in the list
+ */
 PElem ListGetFirst(PList pList){
     pList->iterator = pList->head;
     if (pList->head)
@@ -116,6 +147,14 @@ PElem ListGetFirst(PList pList){
         return NULL;
 }
 
+/*
+ Function: ListGetNext
+ Abstract: a getter method for the next element in the list 
+            depending on the list iterator position.
+            moves the list iterator to the next node and gets it's element.
+ Parameters: pList - a pointer to the list to get the next element of
+ Return: pointer to the element of the next node in the list
+ */
 PElem ListGetNext(PList pList){
     if (!(pList->iterator) || !(pList->iterator->next)) {
         return NULL;
@@ -124,6 +163,13 @@ PElem ListGetNext(PList pList){
     return pList->iterator->element;
 }
 
+/*
+ Function: ListCompare
+ Abstract: compares 2 lists element by element
+ Parameters: pList1 - a pointer to the first list to compare
+             pList2 - a pointer to the second list to compare
+ Return: TRUE or FALSE depending on whether the lists are equal per element or not.
+ */
 BOOL ListCompare(PList pList1, PList pList2){
     PElem elem1 = (PElem)ListGetFirst(pList1);
     PElem elem2 = (PElem)ListGetFirst(pList2);
@@ -140,6 +186,13 @@ BOOL ListCompare(PList pList1, PList pList2){
     return TRUE;
 }
 
+/*
+ Function: ListPrint
+ Abstract: prints all elements in the list by order of addition 
+                and via the print_func of the list
+ Parameters: pList - a pointer to a list to print it's elements
+ Return: N/A
+ */
 void ListPrint(PList pList){
     PElem prt_elem = (PElem)ListGetFirst(pList);
     printf("[");
