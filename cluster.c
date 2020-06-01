@@ -7,6 +7,12 @@ struct Cluster_ {
 	int min_dist;
 };
 
+/*
+ Function: ClusterCreate
+ Abstract: creates a new cluster of points
+ Parameters: dim - int, the dimension of all points in the cluster
+ Return: pointer to the new cluster with no points in it
+ */
 PCluster ClusterCreate(int dim) {
 	PList new_point_list = ListCreate(PointCopy, PointDestroy, PointCompare, PointPrint);
 	if (!new_point_list)
@@ -22,17 +28,29 @@ PCluster ClusterCreate(int dim) {
 	return new_cluster;
 }
 
+/*
+ Function: ClusterDestroy
+ Abstract: deletes a cluster and all it's points
+ Parameters: pCluster - a pointer to the cluster to delete
+ Return: N/A
+ */
 void ClusterDestroy(PCluster pCluster) {
 	ListDestroy(pCluster->points);
 	free(pCluster);
 }
 
+/*
+ Function: ClusterAddPoint
+ Abstract: adds a pooint to the cluster
+ Parameters: pCluster - a pointer to the cluster to add to
+			 pPoint - a pointer to the point to add to the cluster
+ Return: SUCCESS if the point was added correctly. FAIL otherwise
+ */
 Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
 	if ((PointGetAttribute(pPoint,SIZE) != pCluster->dimension) || 
 		(PointGetAttribute(pPoint, DIMENSION) != pCluster->dimension)){
 		return FAIL;
 	}
-	
 	PPoint point1 = (PPoint)ListGetFirst(pCluster->points);
 	while (point1) {
 		if (PointCompare(point1, pPoint)) {
@@ -49,6 +67,13 @@ Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
 	return FAIL;
 }
 
+/*
+ Function: ClusterGetMinDistance
+ Abstract: claculates the min square distance between a point and a cluster
+ Parameters: pCluster - a pointer to the cluster to get the min square distance to
+			 pPoint - a pointer to the point to get the min square distance from
+ Return: int holding the min square distance between the point and the cluster
+ */
 int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 	PPoint point1 = (PPoint)ListGetFirst(pCluster->points);
 	int min_dist = (pCluster->min_dist < 10000 && pCluster->min_dist) ? pCluster->min_dist : 10000;
@@ -72,6 +97,12 @@ int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
 	return min_dist;
 }
 
+/*
+ Function: ClusterPrint
+ Abstract: prints a givven cluster in the requested format
+ Parameters: pCluster - a pointer to the cluster to be printed
+ Return: N/A
+ */
 void ClusterPrint(PCluster pCluster) {
 	printf("Cluster's dimension: %d\n", pCluster->dimension);
 	ListPrint(pCluster->points);
