@@ -16,6 +16,11 @@ struct Point_ {
  Return: TRUE if coordinets are equal, FLASE if not
  */
 static BOOL compare_coor(void* coor1, void* coor2) {
+	if (!coor1 || !coor2) {
+		if (!coor1 && !coor2)
+			return TRUE;
+		return FALSE;
+	}
 	return (*(int*)coor1 == *(int*)coor2)?TRUE:FALSE;
 }
 
