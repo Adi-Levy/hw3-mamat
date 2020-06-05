@@ -120,6 +120,9 @@ Result ListRemove(PList pList, PElem pElem){
     while(pList->iterator->next){
         if(pList->compareFunc(pList->iterator->next->element,pElem)){
             Node_* tmp = pList->iterator->next;
+            //checking if removing the end of the list and changing the list tail acordingly
+            if (!pList->iterator->next->next)
+                pList->tail = pList->iterator;
             pList->iterator->next = pList->iterator->next->next;
             pList->deleteFunc(tmp->element);
             free(tmp);
