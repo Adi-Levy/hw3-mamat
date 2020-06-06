@@ -31,6 +31,8 @@ static BOOL compare_coor(void* coor1, void* coor2) {
  Return: a void pointer to the copied coordinet that can be casted back to int* form
  */
 static void* copy_coor(void* coor) {
+	if (!coor)
+		return NULL;
 	int* cpy_coor;
 	cpy_coor = (int*)malloc(sizeof(int));
 	if (!cpy_coor)
@@ -46,7 +48,8 @@ static void* copy_coor(void* coor) {
  Return: N/A
  */
 static void print_coor(void* coor) {
-	printf("%d ", *(int*)coor);
+	if(coor != NULL)
+		printf("%d ", *(int*)coor);
 }
 
 /*
@@ -92,7 +95,8 @@ PPoint PointCreate(int dim) {
  */
 void PointDestroy(void* pPoint) {
 	PPoint point = (PPoint)pPoint;
-	ListDestroy(point->coordinates);
+	if(point != NULL)
+		ListDestroy(point->coordinates);
 	free(point);
 }
 
@@ -104,20 +108,22 @@ void PointDestroy(void* pPoint) {
  Return: SUCCESS if the addition to the coordinet list was successful. FAIL otherwise
  */
 Result PointAddCoordinate(PPoint pPoint, int n_coordinate) {
-	if (pPoint->size != pPoint->dimension) {
-		int* new_coor;
-		new_coor = (int*)malloc(sizeof(int));
-		if (!new_coor)
-			return FAIL;
-		*new_coor = n_coordinate;
-		if (ListAdd(pPoint->coordinates, new_coor) == SUCCESS) {
-			free(new_coor);
-			pPoint->size++;
-			return SUCCESS;
-		}
-		else {
-			free(new_coor);
-			return FAIL;
+	if (pPoint != NULL) {
+		if (pPoint->size != pPoint->dimension) {
+			int* new_coor;
+			new_coor = (int*)malloc(sizeof(int));
+			if (!new_coor)
+				return FAIL;
+			*new_coor = n_coordinate;
+			if (ListAdd(pPoint->coordinates, new_coor) == SUCCESS) {
+				free(new_coor);
+				pPoint->size++;
+				return SUCCESS;
+			}
+			else {
+				free(new_coor);
+				return FAIL;
+			}
 		}
 	}
 	return FAIL;
@@ -131,6 +137,8 @@ Result PointAddCoordinate(PPoint pPoint, int n_coordinate) {
  Return: integer with the value of the first coordinet
  */
 int PointGetFirstCoordinate(PPoint pPoint) {
+	if (!pPoint)
+		return 0;
 	int* coor = (int*)ListGetFirst(pPoint->coordinates);
 	return (coor) ? *coor : 0;
 }
@@ -142,6 +150,8 @@ int PointGetFirstCoordinate(PPoint pPoint) {
  Return: integer with the value of the next coordinet
  */
 int PointGetNextCoordinate(PPoint pPoint) {
+	if (!pPoint)
+		return 0;
 	int* coor = (int*)ListGetNext(pPoint->coordinates);
 	return (coor) ? *coor : 0;
 }
@@ -154,9 +164,10 @@ int PointGetNextCoordinate(PPoint pPoint) {
  */
 void PointPrint(void* point) {
 	PPoint pPoint = (PPoint)point;
-	printf("Point Dimension: %d, Size: %d, Coordinates: ", pPoint->dimension, pPoint->size);
-	ListPrint(pPoint->coordinates);
-	//printf("\n");
+	if (pPoint != NULL) {
+		printf("Point Dimension: %d, Size: %d, Coordinates: ", pPoint->dimension, pPoint->size);
+		ListPrint(pPoint->coordinates);
+	}
 }
 
 /*
@@ -169,6 +180,8 @@ void PointPrint(void* point) {
 BOOL PointCompare(void* pPoint1, void* pPoint2) {
 	PPoint point1 = (PPoint)pPoint1;
 	PPoint point2 = (PPoint)pPoint2;
+	if (!point1 || !point2)
+		return FALSE;
 	return ((point1->dimension == point2->dimension) &&
 		(point1->size == point2->size) &&
 		(ListCompare(point1->coordinates, point2->coordinates))) ? TRUE : FALSE;
@@ -182,6 +195,8 @@ BOOL PointCompare(void* pPoint1, void* pPoint2) {
  */
 void* PointCopy(void* pPoint) {
 	PPoint point = (PPoint)pPoint;
+	if (!point)
+		return NULL;
 	PPoint New_point = PointCreate(point->dimension);
 	int tmp_coor = PointGetFirstCoordinate(point);
 	int i;
@@ -199,7 +214,9 @@ void* PointCopy(void* pPoint) {
  Return: an integer that is equal to the point's attribute
  */
 int PointGetAttribute(PPoint pPoint, Attribute attribute) {
-	if (attribute == DIMENSION) {
+	if (!pPoint)
+		return -1;
+	else if (attribute == DIMENSION) {
 		return pPoint->dimension;
 	}
 	else if (attribute == SIZE) {

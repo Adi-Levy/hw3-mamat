@@ -35,7 +35,8 @@ PCluster ClusterCreate(int dim) {
  Return: N/A
  */
 void ClusterDestroy(PCluster pCluster) {
-	ListDestroy(pCluster->points);
+	if(pCluster != NULL)
+		ListDestroy(pCluster->points);
 	free(pCluster);
 }
 
@@ -47,6 +48,8 @@ void ClusterDestroy(PCluster pCluster) {
  Return: SUCCESS if the point was added correctly. FAIL otherwise
  */
 Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
+	if (!pCluster || !pPoint)
+		return FAIL;
 	if ((PointGetAttribute(pPoint,SIZE) != pCluster->dimension) || 
 		(PointGetAttribute(pPoint, DIMENSION) != pCluster->dimension)){
 		return FAIL;
@@ -75,6 +78,8 @@ Result ClusterAddPoint(PCluster pCluster, PPoint pPoint) {
  Return: int holding the min square distance between the point and the cluster
  */
 int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
+	if (!pCluster || !pPoint)
+		return 10000;
 	PPoint point1 = (PPoint)ListGetFirst(pCluster->points);
 	int min_dist = (pCluster->min_dist < 10000 && pCluster->min_dist) ? pCluster->min_dist : 10000;
 	while (point1) {
@@ -104,7 +109,9 @@ int ClusterGetMinDistance(PCluster pCluster, PPoint pPoint) {
  Return: N/A
  */
 void ClusterPrint(PCluster pCluster) {
-	printf("Cluster's dimension: %d\n", pCluster->dimension);
-	ListPrint(pCluster->points);
-	printf("Minimum Square Distance: %d\n", pCluster->min_dist);
+	if (pCluster != NULL) {
+		printf("Cluster's dimension: %d\n", pCluster->dimension);
+		ListPrint(pCluster->points);
+		printf("Minimum Square Distance: %d\n", pCluster->min_dist);
+	}
 }

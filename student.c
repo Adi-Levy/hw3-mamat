@@ -16,6 +16,10 @@ struct Student_ {
  Return: pointer to the new student object with the new information
  */
 PStudent StudentCreate(char* n_name, int n_age, int n_ID, char* n_faculty) {
+	if (!n_name)
+		n_name = "";
+	if (!n_faculty)
+		n_faculty = "";
 	PStudent new_student;
 	new_student = (PStudent)malloc(sizeof(Student));
 	if (!new_student) {
@@ -48,8 +52,9 @@ PStudent StudentCreate(char* n_name, int n_age, int n_ID, char* n_faculty) {
  */
 void printStudent(void* pStudent) {
 	PStudent student = (PStudent)pStudent;
-	printf("Name: %s, Age: %d, ID: %d, Faculty: %s\n", student->name,
-		student->age, student->ID, student->faculty);
+	if(student != NULL)
+		printf("Name: %s, Age: %d, ID: %d, Faculty: %s\n", student->name,
+			student->age, student->ID, student->faculty);
 }
 
 /*
@@ -60,6 +65,8 @@ void printStudent(void* pStudent) {
  */
 void* cloneStudent(void* pStudent) {
 	PStudent student = (PStudent)pStudent;
+	if (!student)
+		return NULL;
 	return (void*)StudentCreate(student->name, student->age, student->ID, student->faculty);
 }
 
@@ -71,9 +78,11 @@ void* cloneStudent(void* pStudent) {
  */
 void destroyStudent(void* pStudent) {
 	PStudent student = (PStudent)pStudent;
-	free(student->name);
-	free(student->faculty);
-	free(student);
+	if (!student) {
+		free(student->name);
+		free(student->faculty);
+		free(student);
+	}
 }
 
 /*
@@ -86,5 +95,7 @@ void destroyStudent(void* pStudent) {
 BOOL compareStudents(void* student1, void* student2) {
 	PStudent pStudent1 = (PStudent)student1;
 	PStudent pStudent2 = (PStudent)student2;
+	if (!pStudent1 || !pStudent2)
+		return FALSE;
 	return (pStudent1->ID == pStudent2->ID) ? TRUE : FALSE;
 }

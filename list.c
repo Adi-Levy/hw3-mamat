@@ -57,12 +57,14 @@ PList ListCreate(copy_func cpy_f, delete_func del_f, compare_func cmp_f, print_f
  Return: N/A
  */
 void ListDestroy(PList pList){
-    pList->iterator = pList->head;
-    while(pList->iterator){
-        Node_* tmp = pList->iterator;
-        pList->iterator = pList->iterator->next;
-        pList->deleteFunc(tmp->element);
-        free(tmp);
+    if (pList != NULL) {
+        pList->iterator = pList->head;
+        while (pList->iterator) {
+            Node_* tmp = pList->iterator;
+            pList->iterator = pList->iterator->next;
+            pList->deleteFunc(tmp->element);
+            free(tmp);
+        }
     }
     free(pList);
 }
@@ -75,6 +77,8 @@ void ListDestroy(PList pList){
  Return: SUCCESS or FAIL depending on the success of the addition to the list operation
  */
 Result ListAdd(PList pList, PElem pElem){
+    if (!pList || !pElem)
+        return FAIL;
     PElem elem = (PElem)pList->copyFunc(pElem);
     if(!elem){
         return FAIL;
@@ -106,6 +110,8 @@ Result ListAdd(PList pList, PElem pElem){
  Return: SUCCESS or FAIL depending on the success of the removal from the list
  */
 Result ListRemove(PList pList, PElem pElem){
+    if (!pList || !pElem)
+        return FAIL;
     // check if first element is the one to delet and if so shorten the list
     if (pList->compareFunc(pList->head->element,pElem) == TRUE) {
         Node_* tmp = pList->head;
@@ -143,6 +149,8 @@ Result ListRemove(PList pList, PElem pElem){
  Return: pointer to the element of the first node in the list
  */
 PElem ListGetFirst(PList pList){
+    if (!pList)
+        return NULL;
     pList->iterator = pList->head;
     if (pList->head)
         return pList->head->element;
@@ -159,6 +167,8 @@ PElem ListGetFirst(PList pList){
  Return: pointer to the element of the next node in the list
  */
 PElem ListGetNext(PList pList){
+    if (!pList)
+        return NULL;
     if (!(pList->iterator) || !(pList->iterator->next)) {
         return NULL;
     }
@@ -174,6 +184,8 @@ PElem ListGetNext(PList pList){
  Return: TRUE or FALSE depending on whether the lists are equal per element or not.
  */
 BOOL ListCompare(PList pList1, PList pList2){
+    if (!pList1 || !pList2)
+        return FALSE;
     PElem elem1 = (PElem)ListGetFirst(pList1);
     PElem elem2 = (PElem)ListGetFirst(pList2);
     while (elem1 && elem2) {
@@ -197,11 +209,13 @@ BOOL ListCompare(PList pList1, PList pList2){
  Return: N/A
  */
 void ListPrint(PList pList){
-    PElem prt_elem = (PElem)ListGetFirst(pList);
-    printf("[");
-    while (prt_elem) {
-        pList->printFunc(prt_elem);
-        prt_elem = (PElem)ListGetNext(pList);
+    if (pList != NULL) {
+        PElem prt_elem = (PElem)ListGetFirst(pList);
+        printf("[");
+        while (prt_elem) {
+            pList->printFunc(prt_elem);
+            prt_elem = (PElem)ListGetNext(pList);
+        }
+        printf("]\n");
     }
-    printf("]\n");
 }
