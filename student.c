@@ -78,7 +78,7 @@ void* cloneStudent(void* pStudent) {
  */
 void destroyStudent(void* pStudent) {
 	PStudent student = (PStudent)pStudent;
-	if (!student) {
+	if (student != NULL) {
 		free(student->name);
 		free(student->faculty);
 		free(student);
